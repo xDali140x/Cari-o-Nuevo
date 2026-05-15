@@ -1,97 +1,70 @@
-using System.Collections;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
-public class MoveObjectOnTrigger : MonoBehaviour
+public class DisableGrabOnContact : MonoBehaviour
 {
-    [Header("Objeto que se va a mover")]
-    public GameObject objectToMove;
+    [Header("Objeto que debe tocar este trigger")]
+    public GameObject objectToDetect;
 
-    [Header("Posición destino")]
-    public Transform targetPosition;
+    [Header("XR Grab Interactable que se va a desactivar")]
+    public XRGrabInteractable grabToDisable;
 
     [Header("Opciones")]
-    public bool matchRotation = true;
-    public bool onlyOnce = false;
-    public float moveSpeed = 0f; 
-    // 0 = se mueve instantáneo
-    // mayor a 0 = se mueve suavemente
+    public bool makeRigidbodyKinematic = true;
+    public bool stopPhysicsMovement = true;
+    public bool onlyOnce = true;
 
-    private bool alreadyMoved;
-    private Coroutine moveCoroutine;
+    private bool hasTriggered = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (onlyOnce && alreadyMoved) return;
-        if (targetPosition == null) return;
+        if (onlyOnce && hasTriggered)
+            return;
 
-        GameObject targetObject = objectToMove;
-
-        // Si no asignas objectToMove, mueve el objeto que entró al trigger
-        if (targetObject == null)
+        if (objectToDetect == null)
         {
-            if (other.attachedRigidbody != null)
-                targetObject = other.attachedRigidbody.gameObject;
-            else
-                targetObject = other.gameObject;
+            Debug.LogWarning("No asignaste Object To Detect.");
+            return;
         }
 
-        MoveObject(targetObject);
-        alreadyMoved = true;
+        bool isCorrectObject =
+            other.gameObject == objectToDetect ||
+            other.transform.root.gameObject == objectToDetect ||
+            other.transform.IsChildOf(objectToDetect.transform);
+
+        if (!isCorrectObject)
+            return;
+
+        DisableGrab();
+
+        hasTriggered = true;
     }
 
-    private void MoveObject(GameObject obj)
+    private void DisableGrab()
     {
-        if (obj == null) return;
+        if (grabToDisable == null)
+        {
+            Debug.LogWarning("No asignaste Grab To Disable.");
+            return;
+        }
 
-        Rigidbody rb = obj.GetComponent<Rigidbody>();
+        GameObject grabbedObject = grabToDisable.gameObject;
 
-        if (rb != null)
+        Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
+
+        if (rb != null && stopPhysicsMovement)
         {
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
 
-        if (moveSpeed <= 0f)
+        if (rb != null && makeRigidbodyKinematic)
         {
-            obj.transform.position = targetPosition.position;
-
-            if (matchRotation)
-                obj.transform.rotation = targetPosition.rotation;
-        }
-        else
-        {
-            if (moveCoroutine != null)
-                StopCoroutine(moveCoroutine);
-
-            moveCoroutine = StartCoroutine(MoveSmooth(obj.transform));
-        }
-    }
-
-    private IEnumerator MoveSmooth(Transform objTransform)
-    {
-        while (Vector3.Distance(objTransform.position, targetPosition.position) > 0.01f)
-        {
-            objTransform.position = Vector3.MoveTowards(
-                objTransform.position,
-                targetPosition.position,
-                moveSpeed * Time.deltaTime
-            );
-
-            if (matchRotation)
-            {
-                objTransform.rotation = Quaternion.RotateTowards(
-                    objTransform.rotation,
-                    targetPosition.rotation,
-                    moveSpeed * 100f * Time.deltaTime
-                );
-            }
-
-            yield return null;
+            rb.isKinematic = true;
         }
 
-        objTransform.position = targetPosition.position;
+        grabToDisable.enabled = false;
 
-        if (matchRotation)
-            objTransform.rotation = targetPosition.rotation;
+        Debug.Log("XR Grab Interactable desactivado.");
     }
 }
