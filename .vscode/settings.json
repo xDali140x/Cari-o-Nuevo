@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Cariño Nuevo.slnx"
+    "dotnet.defaultSolution": "Cari-o-Nuevo.slnx"
 }
