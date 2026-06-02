@@ -7,54 +7,48 @@ public class Plato : MonoBehaviour
     public Collider[] collidersADesaparecer;
 
     public float tiempoNecesario = 3f;
-    public bool soloUnaVez = true;
 
-    private float contadorTiempo = 0f;
-    private bool yaSeActivo = false;
+    private float[] contadores;
+    private bool[] yaDesaparecio;
+
+    void Start()
+    {
+        contadores = new float[collidersADesaparecer.Length];
+        yaDesaparecio = new bool[collidersADesaparecer.Length];
+    }
 
     void Update()
     {
         if (colliderActivador == null) return;
         if (collidersADesaparecer == null || collidersADesaparecer.Length == 0) return;
-        if (soloUnaVez && yaSeActivo) return;
 
-        bool estaTocando = false;
-
-        foreach (Collider col in collidersADesaparecer)
+        for (int i = 0; i < collidersADesaparecer.Length; i++)
         {
+            Collider col = collidersADesaparecer[i];
+
             if (col == null) continue;
+            if (yaDesaparecio[i]) continue;
 
             if (colliderActivador.bounds.Intersects(col.bounds))
             {
-                estaTocando = true;
-                break;
-            }
-        }
+                contadores[i] += Time.deltaTime;
 
-        if (estaTocando)
-        {
-            contadorTiempo += Time.deltaTime;
-
-            if (contadorTiempo >= tiempoNecesario)
-            {
-                foreach (Collider col in collidersADesaparecer)
+                if (contadores[i] >= tiempoNecesario)
                 {
-                    if (col == null) continue;
-
                     MeshRenderer mesh = col.GetComponent<MeshRenderer>();
 
                     if (mesh != null)
                     {
                         mesh.enabled = false;
                     }
-                }
 
-                yaSeActivo = true;
+                    yaDesaparecio[i] = true;
+                }
             }
-        }
-        else
-        {
-            contadorTiempo = 0f;
+            else
+            {
+                contadores[i] = 0f;
+            }
         }
     }
 }
