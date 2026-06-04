@@ -100,9 +100,15 @@ public class MenuManager : MonoBehaviour
         panel.transform.rotation = Quaternion.LookRotation(panel.transform.position - cameraTransform.position);
     }
 
-    public void BotonMute()
+    [Header("Mute")]
+    public UnityEngine.UI.Toggle toggleMute;
+    public Sprite spriteMuteOn;
+    public Sprite spriteMuteOff;
+
+    public void BotonMute(bool muteado)
     {
-        AudioListener.volume = AudioListener.volume > 0 ? 0 : 1;
+        AudioListener.volume = muteado ? 0 : 1;
+        toggleMute.GetComponentInChildren<UnityEngine.UI.Image>().sprite = muteado ? spriteMuteOn : spriteMuteOff;
     }
 
     public void BotonReiniciar()
