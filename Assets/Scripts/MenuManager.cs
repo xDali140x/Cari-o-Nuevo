@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class MenuManager : MonoBehaviour
 {
@@ -13,11 +14,40 @@ public class MenuManager : MonoBehaviour
     public Transform cameraTransform;
     public float distanciaFlotante = 1.5f;
 
+    [Header("Input")]
+    public InputActionReference botonB;
+
+    void OnEnable()
+    {
+        botonB.action.Enable();
+        botonB.action.performed += OnBotonB;
+    }
+
+    void OnDisable()
+    {
+        botonB.action.performed -= OnBotonB;
+        botonB.action.Disable();
+    }
+
     void Start()
     {
         panelMenu.SetActive(true);
         panelSettings.SetActive(false);
         panelControles.SetActive(false);
+    }
+
+    void OnBotonB(InputAction.CallbackContext context)
+    {
+        if (!estaJugando) return;
+
+        if (panelSettings.activeSelf)
+        {
+            CerrarSettings();
+        }
+        else
+        {
+            AbrirSettings();
+        }
     }
 
     public void BotonPlay()
