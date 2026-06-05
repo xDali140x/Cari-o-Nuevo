@@ -8,6 +8,8 @@ public class Radio : MonoBehaviour
     public Collider targetTrigger;      // radio
     public GameObject objectToDisappear;
     public GameObject objectToAppear;
+    public GameObject CambioEscena;
+
 
 
     private void Start()
@@ -28,6 +30,7 @@ public class Radio : MonoBehaviour
         if (triggersTouching)
         {
             objectToAppear.SetActive(true);
+            CambioEscena.SetActive(true);
             objectToDisappear.SetActive(false);
             Debug.Log("SE ESTAN TOCANDO");
         }

@@ -81,6 +81,7 @@ public class MenuManager : MonoBehaviour
         panelSettings.SetActive(false);
         panelControles.SetActive(false);
         estaJugando = true;
+        SceneTransitionManager.singleton.GoToSceneAsync(1);
     }
 
     public void AbrirSettings()
