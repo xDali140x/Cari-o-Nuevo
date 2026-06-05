@@ -35,6 +35,10 @@ public class MenuManager : MonoBehaviour
     public Sprite spriteMuteOn;
     public Sprite spriteMuteOff;
 
+    [Header("Locomocion")]
+    public CharacterController characterController;
+    public MonoBehaviour[] locomotionComponents;
+
     void OnEnable()
     {
         botonB.action.Enable();
@@ -49,6 +53,12 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
+        // Bloquear movimiento al inicio
+        if (characterController != null)
+            characterController.enabled = false;
+
+        foreach (var component in locomotionComponents)
+            component.enabled = false;
         // Conectar botones
         btnPlay.onClick.AddListener(BotonPlay);
         btnSettings.onClick.AddListener(AbrirSettings);
@@ -81,6 +91,12 @@ public class MenuManager : MonoBehaviour
         panelSettings.SetActive(false);
         panelControles.SetActive(false);
         estaJugando = true;
+        // Desbloquear movimiento
+        if (characterController != null)
+            characterController.enabled = true;
+
+        foreach (var component in locomotionComponents)
+            component.enabled = true;
         SceneTransitionManager.singleton.GoToSceneAsync(1);
     }
 
