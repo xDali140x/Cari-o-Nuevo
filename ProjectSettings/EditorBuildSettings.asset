@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/1 Start Scene.unity
-    guid: 877991f6640b1244caf70a138fa4fdb0
+    path: Assets/Scenes/1 StartCamilo.unity
+    guid: e9a7c93e7b7ee3b4aa85f6978168d81d
   - enabled: 1
     path: Assets/Scenes/InteriorDali.unity
     guid: bb30ff323ed1da34a84818ed1c0e8fe5
