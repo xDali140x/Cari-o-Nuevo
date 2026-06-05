@@ -15,8 +15,14 @@ EditorBuildSettings:
     path: Assets/Scenes/ExteriorLucesOrganizado - SONIDO SAMUEL.unity
     guid: 17449a0fd6edce74f8cc2cb4faa326f1
   - enabled: 1
-    path: Assets/Scenes/EscenaNovena.unity
-    guid: 6d8e7507ddf97b940b6110113bcbc056
+    path: Assets/Scenes/Novena.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/ExteriorFinal.unity
+    guid: 38614b62c2287494184c3f91079e0c1d
+  - enabled: 1
+    path: Assets/Scenes/FinalFinal.unity
+    guid: 3e2bf3ef79f648a42826b2c63fc8fd25
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: fc4d95aa8433cd6439ebf1b84e260cc4, type: 2}
