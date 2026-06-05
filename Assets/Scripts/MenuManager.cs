@@ -39,6 +39,10 @@ public class MenuManager : MonoBehaviour
     public CharacterController characterController;
     public MonoBehaviour[] locomotionComponents;
 
+    [Header("Ray Interactors")]
+    public GameObject rayInteractorDerecho;
+    public GameObject rayInteractorIzquierdo;
+
     void OnEnable()
     {
         botonB.action.Enable();
@@ -106,12 +110,18 @@ public class MenuManager : MonoBehaviour
         panelSettings.SetActive(true);
 
         if (estaJugando)
+        {
             PosicionarFrenteAlJugador(panelSettings);
+            if (rayInteractorDerecho != null) rayInteractorDerecho.SetActive(true);
+            if (rayInteractorIzquierdo != null) rayInteractorIzquierdo.SetActive(true);
+        }
     }
 
     public void CerrarSettings()
     {
         panelSettings.SetActive(false);
+        if (rayInteractorDerecho != null) rayInteractorDerecho.SetActive(false);
+        if (rayInteractorIzquierdo != null) rayInteractorIzquierdo.SetActive(false);
 
         if (!estaJugando)
             panelMenu.SetActive(true);
