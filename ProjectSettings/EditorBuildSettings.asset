@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/InteriorDali.unity
     guid: bb30ff323ed1da34a84818ed1c0e8fe5
   - enabled: 1
-    path: Assets/Scenes/ExteriorLucesOrganizado.unity
-    guid: cb62a03c61d7e254da3218f77a2adb35
+    path: Assets/Scenes/ExteriorLucesOrganizado - SONIDO SAMUEL.unity
+    guid: 17449a0fd6edce74f8cc2cb4faa326f1
   - enabled: 1
     path: Assets/Scenes/EscenaNovena.unity
     guid: 6d8e7507ddf97b940b6110113bcbc056
