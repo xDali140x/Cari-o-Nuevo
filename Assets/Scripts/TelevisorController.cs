@@ -14,6 +14,8 @@ public class TelevisorController : MonoBehaviour
     [Header("Estado inicial")]
     public bool iniciarEncendido = false;
     public int canalInicial = 0;
+    [Header("Audio")]
+    public AudioSource audioTelevisor;
 
     private bool estaEncendido;
     private int canalActual;
@@ -99,6 +101,20 @@ public class TelevisorController : MonoBehaviour
 
         CargarCanalActual();
         Debug.Log("Canal actual: " + canalActual);
+    }
+    public void AlternarMute()
+    {
+        if (audioTelevisor == null)
+        {
+            Debug.LogWarning("No se asignó el Audio Source del televisor.");
+            return;
+        }
+
+        audioTelevisor.mute = !audioTelevisor.mute;
+
+        Debug.Log(audioTelevisor.mute
+            ? "Televisor silenciado"
+            : "Sonido del televisor activado");
     }
 
     private void CargarCanalActual()
