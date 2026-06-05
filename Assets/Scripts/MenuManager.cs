@@ -40,8 +40,8 @@ public class MenuManager : MonoBehaviour
     public MonoBehaviour[] locomotionComponents;
 
     [Header("Ray Interactors")]
-    public GameObject rayInteractorDerecho;
-    public GameObject rayInteractorIzquierdo;
+    public GameObject lineVisualDerecho;
+    public GameObject lineVisualIzquierdo;
 
     void OnEnable()
     {
@@ -112,16 +112,16 @@ public class MenuManager : MonoBehaviour
         if (estaJugando)
         {
             PosicionarFrenteAlJugador(panelSettings);
-            if (rayInteractorDerecho != null) rayInteractorDerecho.SetActive(true);
-            if (rayInteractorIzquierdo != null) rayInteractorIzquierdo.SetActive(true);
+            if (lineVisualDerecho != null) lineVisualDerecho.SetActive(true);
+            if (lineVisualIzquierdo != null) lineVisualIzquierdo.SetActive(true);
         }
     }
 
     public void CerrarSettings()
     {
         panelSettings.SetActive(false);
-        if (rayInteractorDerecho != null) rayInteractorDerecho.SetActive(false);
-        if (rayInteractorIzquierdo != null) rayInteractorIzquierdo.SetActive(false);
+        if (lineVisualDerecho != null) lineVisualDerecho.SetActive(false);
+        if (lineVisualIzquierdo != null) lineVisualIzquierdo.SetActive(false);
 
         if (!estaJugando)
             panelMenu.SetActive(true);
@@ -133,7 +133,11 @@ public class MenuManager : MonoBehaviour
         panelControles.SetActive(true);
 
         if (estaJugando)
-            PosicionarFrenteAlJugador(panelControles);
+            {
+                PosicionarFrenteAlJugador(panelControles);
+                if (lineVisualDerecho != null) lineVisualDerecho.SetActive(true);
+                if (lineVisualIzquierdo != null) lineVisualIzquierdo.SetActive(true);
+            }
     }
 
     public void CerrarControles()
